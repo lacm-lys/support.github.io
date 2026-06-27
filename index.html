@@ -77,20 +77,13 @@
         .card-title {
             font-size: 1.3em;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         
         .card-arabic {
             font-size: 1.4em;
             text-align: right;
-            margin-bottom: 10px;
             font-weight: bold;
-        }
-        
-        .card-transliteration {
-            font-size: 0.95em;
-            opacity: 0.9;
-            font-style: italic;
         }
         
         .card-body {
@@ -173,33 +166,33 @@
     <script>
         // Données des sourates
         const sourates = [
-            { num: 87, name: "Al-A^la", arabic: "سورة الأعلى", transliteration: "sourate al-Aʿlā", file: "Récitation de سورة الأعلى sourate al-A%5Ela (la sourate 87).mp3" },
-            { num: 88, name: "Al-Ghachiyah", arabic: "سورة الغاشية", transliteration: "sourate al-Ghachiyah", file: "Récitation de سورة الغاشية sourate al-Ghachiyah (la sourate 88).mp3" },
-            { num: 89, name: "Al-Fajr", arabic: "سورة الفجر", transliteration: "sourate al-Fajr", file: "Récitation de سورة الفجر sourate al-Fajr (la sourate 89).mp3" },
-            { num: 90, name: "Al-Balad", arabic: "سورة البلد", transliteration: "sourate al-Balad", file: "Récitation de سورة البلد sourate al-Balad (la sourate 90).mp3" },
-            { num: 91, name: "Ash-Chams", arabic: "سورة الشمس", transliteration: "sourate ach-Chams", file: "Récitation de سورة الشمس sourate ach-Chams (la sourate 91).mp3" },
-            { num: 92, name: "Al-Layl", arabic: "سورة الليل", transliteration: "sourate al-Layl", file: "Récitation de س��رة الليل sourate al-Layl (la sourate 92).mp3" },
-            { num: 93, name: "Ad-Douha", arabic: "سورة الضحى", transliteration: "sourate Ad-Douha", file: "Récitation de سورة الضحى sourate Ad-Douha (la sourate 93).mp3" },
-            { num: 94, name: "Ash-Charh", arabic: "سورة الشرح", transliteration: "sourate ach-Charh", file: "Récitation de سورة الشرح sourate ach-Charh (la sourate 94).mp3" },
-            { num: 95, name: "At-Tin", arabic: "سورة التين", transliteration: "sourate at-Tin", file: "Récitation de سورة التين sourate at-Tin (la sourate 95).mp3" },
-            { num: 96, name: "Al-Alaq", arabic: "سورة العلق", transliteration: "sourate al-Alaq", file: "Récitation de سورة العلق sourate al-%5EAlaq (la sourate 96).mp3" },
-            { num: 97, name: "Al-Qadr", arabic: "سورة القدر", transliteration: "sourate al-Qadr", file: "Récitation de سورة القدر sourate al-Qadr (la sourate 97).mp3" },
-            { num: 98, name: "Al-Bayyinah", arabic: "سورة البيّنة", transliteration: "sourate al-Bayyinah", file: "Récitation de سورة البيّنة sourate al-Bayyinah (la sourate 98).mp3" },
-            { num: 99, name: "Az-Zalzalah", arabic: "سورة الزلزلة", transliteration: "sourate az-Zalzalah", file: "Récitation de سورة الزلزلة sourate az-Zalzalah (la sourate 99).mp3" },
-            { num: 100, name: "Al-Adiyat", arabic: "سورة العاديات", transliteration: "sourate al-Adiyat", file: "Récitation de سورة العاديات sourate al-%5EAdiyat (la sourate 100).mp3" },
-            { num: 101, name: "Al-Qariʿah", arabic: "سورة القارعة", transliteration: "sourate al-Qari^ah", file: "Récitation de سورة القارعة sourate al-Qari%5Eah (la sourate 101).mp3" },
-            { num: 102, name: "At-Takathour", arabic: "سورة التكاثر", transliteration: "sourate at-Takathour", file: "Récitation de سورة التكاثر sourate at-Takathour (la sourate 102).mp3" },
-            { num: 103, name: "Al-Asr", arabic: "سورة العصر", transliteration: "sourate al-Asr", file: "Récitation de سورة العصر sourate al-%5EAsr (la sourate 103).mp3" },
-            { num: 104, name: "Al-Houmazah", arabic: "سورة الهُمَزَة", transliteration: "sourate al-Houmazah", file: "Récitation de سورة الهُمَزَة sourate al-Houmazah (la sourate 104).mp3" },
-            { num: 105, name: "Al-Fil", arabic: "سورة الفيل", transliteration: "sourate al-Fil", file: "Récitation de سورة الفيل sourate al-Fil (la sourate 105).mp3" },
-            { num: 106, name: "Qouraych", arabic: "سورة قريش", transliteration: "sourate Qouraych", file: "Récitation de سورة قريش sourate Qouraych (la sourate 106).mp3" },
-            { num: 107, name: "Al-Maʿoun", arabic: "سورة الماعون", transliteration: "sourate al-Ma^oun", file: "Récitation de سورة الماعون sourate al-Ma%5Eoun (la sourate 107).mp3" },
-            { num: 108, name: "Al-Kawthar", arabic: "سورة الكوثر", transliteration: "sourate al-Kawthar", file: "Récitation de سورة الكوثر sourate al-Kawthar (la sourate 108).mp3" },
-            { num: 109, name: "Al-Kafiroun", arabic: "سورة الكافرون", transliteration: "sourate al-Kafiroun", file: "Récitation de سورة الكافرون sourate al-Kafiroun (la sourate 109).mp3" },
-            { num: 110, name: "An-Nasr", arabic: "سورة النصر", transliteration: "sourate an-Nasr", file: "Récitation de سورة النصر sourate an-Nasr (la sourate 110).mp3" },
-            { num: 111, name: "Al-Masad", arabic: "سورة المسد", transliteration: "sourate al-Masad", file: "Récitation de سورة المسد sourate al-Ma%C3%A7ad (la sourate 111).mp3" },
-            { num: 112, name: "Al-Ikhlas", arabic: "سورة الإخلاص", transliteration: "sourate al-Ikhlas", file: "Récitation de سورة الإخلاص sourate al-Ikhlas (la sourate 112).mp3" },
-            { num: 113, name: "Al-Falaq", arabic: "سورة الفلق", transliteration: "sourate al-Falaq", file: "Récitation de سورة الفلق sourate al-Falaq (la sourate 113).mp3" }
+            { num: 87, name: "Al-A^la", arabic: "سورة الأعلى", file: "Récitation de سورة الأعلى sourate al-A%5Ela (la sourate 87).mp3" },
+            { num: 88, name: "Al-Ghachiyah", arabic: "سورة الغاشية", file: "Récitation de سورة الغاشية sourate al-Ghachiyah (la sourate 88).mp3" },
+            { num: 89, name: "Al-Fajr", arabic: "سورة الفجر", file: "Récitation de سورة الفجر sourate al-Fajr (la sourate 89).mp3" },
+            { num: 90, name: "Al-Balad", arabic: "سورة البلد", file: "Récitation de سورة البلد sourate al-Balad (la sourate 90).mp3" },
+            { num: 91, name: "Ash-Chams", arabic: "سورة الشمس", file: "Récitation de سورة الشمس sourate ach-Chams (la sourate 91).mp3" },
+            { num: 92, name: "Al-Layl", arabic: "سورة الليل", file: "Récitation de سورة الليل sourate al-Layl (la sourate 92).mp3" },
+            { num: 93, name: "Ad-Douha", arabic: "سورة الضحى", file: "Récitation de سورة الضحى sourate Ad-Douha (la sourate 93).mp3" },
+            { num: 94, name: "Ash-Charh", arabic: "سورة الشرح", file: "Récitation de سورة الشرح sourate ach-Charh (la sourate 94).mp3" },
+            { num: 95, name: "At-Tin", arabic: "سورة التين", file: "Récitation de سورة التين sourate at-Tin (la sourate 95).mp3" },
+            { num: 96, name: "Al-Alaq", arabic: "سورة العلق", file: "Récitation de سورة العلق sourate al-%5EAlaq (la sourate 96).mp3" },
+            { num: 97, name: "Al-Qadr", arabic: "سورة القدر", file: "Récitation de سورة القدر sourate al-Qadr (la sourate 97).mp3" },
+            { num: 98, name: "Al-Bayyinah", arabic: "سورة البيّنة", file: "Récitation de سورة البيّنة sourate al-Bayyinah (la sourate 98).mp3" },
+            { num: 99, name: "Az-Zalzalah", arabic: "سورة الزلزلة", file: "Récitation de سورة الزلزلة sourate az-Zalzalah (la sourate 99).mp3" },
+            { num: 100, name: "Al-Adiyat", arabic: "سورة العاديات", file: "Récitation de سورة العاديات sourate al-%5EAdiyat (la sourate 100).mp3" },
+            { num: 101, name: "Al-Qariʿah", arabic: "سورة القارعة", file: "Récitation de سورة القارعة sourate al-Qari%5Eah (la sourate 101).mp3" },
+            { num: 102, name: "At-Takathour", arabic: "سورة التكاثر", file: "Récitation de سورة التكاثر sourate at-Takathour (la sourate 102).mp3" },
+            { num: 103, name: "Al-Asr", arabic: "سورة العصر", file: "Récitation de سورة العصر sourate al-%5EAsr (la sourate 103).mp3" },
+            { num: 104, name: "Al-Houmazah", arabic: "سورة الهُمَزَة", file: "Récitation de سورة الهُمَزَة sourate al-Houmazah (la sourate 104).mp3" },
+            { num: 105, name: "Al-Fil", arabic: "سورة الفيل", file: "Récitation de سورة الفيل sourate al-Fil (la sourate 105).mp3" },
+            { num: 106, name: "Qouraych", arabic: "سورة قريش", file: "Récitation de سورة قريش sourate Qouraych (la sourate 106).mp3" },
+            { num: 107, name: "Al-Maʿoun", arabic: "سورة الماعون", file: "Récitation de سورة الماعون sourate al-Ma%5Eoun (la sourate 107).mp3" },
+            { num: 108, name: "Al-Kawthar", arabic: "سورة الكوثر", file: "Récitation de سورة الكوثر sourate al-Kawthar (la sourate 108).mp3" },
+            { num: 109, name: "Al-Kafiroun", arabic: "سورة الكافرون", file: "Récitation de سورة الكافرون sourate al-Kafiroun (la sourate 109).mp3" },
+            { num: 110, name: "An-Nasr", arabic: "سورة النصر", file: "Récitation de سورة النصر sourate an-Nasr (la sourate 110).mp3" },
+            { num: 111, name: "Al-Masad", arabic: "سورة المسد", file: "Récitation de سورة المسد sourate al-Ma%C3%A7ad (la sourate 111).mp3" },
+            { num: 112, name: "Al-Ikhlas", arabic: "سورة الإخلاص", file: "Récitation de سورة الإخلاص sourate al-Ikhlas (la sourate 112).mp3" },
+            { num: 113, name: "Al-Falaq", arabic: "سورة الفلق", file: "Récitation de سورة الفلق sourate al-Falaq (la sourate 113).mp3" }
         ];
         
         const grid = document.getElementById('souratGrid');
@@ -212,7 +205,6 @@
                         <div class="card-number">Sourate #${sourate.num}</div>
                         <div class="card-title">${sourate.name}</div>
                         <div class="card-arabic">${sourate.arabic}</div>
-                        <div class="card-transliteration">${sourate.transliteration}</div>
                     </div>
                     <div class="card-body">
                         <audio controls>
@@ -234,7 +226,6 @@
             const filtered = sourates.filter(sourate => 
                 sourate.name.toLowerCase().includes(searchTerm) ||
                 sourate.arabic.includes(searchTerm) ||
-                sourate.transliteration.toLowerCase().includes(searchTerm) ||
                 sourate.num.toString().includes(searchTerm)
             );
             renderSourates(filtered);
