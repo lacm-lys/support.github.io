@@ -1,1 +1,260 @@
-<H1>HELLO</H1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture Musulmane Tome 5 - Récitations du Coran</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        /* Navigation */
+        nav {
+            background: rgba(5, 150, 105, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        /* Main Content */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            padding: 40px 20px;
+        }
+        
+        .pdf-viewer {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            min-height: 800px;
+        }
+        
+        .pdf-viewer embed {
+            width: 100%;
+            height: 800px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #10b981;
+        }
+        
+        .info-card h3 {
+            color: #059669;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .info-item {
+            margin-bottom: 12px;
+            color: #555;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #059669;
+        }
+        
+        .download-btn {
+            display: block;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+        
+        .view-btn {
+            background: white;
+            color: #059669;
+            border: 2px solid #10b981;
+        }
+        
+        .view-btn:hover {
+            background: #f0fdf4;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(5, 150, 105, 0.95);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .pdf-viewer embed {
+                height: 600px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            nav ul {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="home.html" class="logo">📖 Coran Récitations</a>
+            <ul>
+                <li><a href="home.html">Accueil</a></li>
+                <li><a href="index.html">Sourates</a></li>
+                <li><a href="books.html">📚 Ressources PDF</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>📕 al-qawlou-jaliyy-2012</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content">
+            <!-- PDF Viewer -->
+            <div class="pdf-viewer">
+                <embed src="al-qawlou-jaliyy-2012" type="application/pdf">
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Info Card -->
+                <div class="info-card">
+                    <h3>📋 Informations</h3>
+                    <div class="info-item">
+                        <span class="info-label">Titre :</span> al-qawlou-jaliyy-2012
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Format :</span> PDF
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Langue :</span> Français
+               
+                </div>
+
+
+                <!-- Action Buttons -->
+                <div class="info-card" style="border: none;">
+                    <a href="Culture-Musulmane-Tome-5.pdf" download class="download-btn">📥 Télécharger PDF</a>
+                    <a href="Culture-Musulmane-Tome-5.pdf" target="_blank" class="download-btn view-btn">🔍 Nouvelle fenêtre</a>
+                    <a href="books.html" class="download-btn view-btn">← Retour aux ressources</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="margin-top: 10px; opacity: 0.8;">LACM</p>
+        </div>
+    </footer>
+</body>
+</html>
