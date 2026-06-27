@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Récitations du Coran</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        /* Navigation */
+        nav {
+            background: rgba(5, 150, 105, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 70px);
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero-content p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #059669;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 80px 20px;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #059669;
+            margin-bottom: 60px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 30px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Coming Soon Section */
+        .coming-soon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 80px 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .coming-soon h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .coming-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .coming-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .coming-feature h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(5, 150, 105, 0.95);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2em;
+            }
+            
+            .hero-content p {
+                font-size: 1em;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            nav ul {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">📖 Coran Récitations</a>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="sourates.html">Sourates</a></li>
+                <li><a href="#features">Fonctionnalités</a></li>
+                <li><a href="#venir">À Venir</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero" id="accueil">
+        <div class="hero-content">
+            <h1>🌙 Récitations du Coran</h1>
+            <p>Découvrez les sourates complètes avec audio haute qualité</p>
+            <div class="hero-buttons">
+                <a href="sourates.html" class="btn btn-primary">🎧 Commencer</a>
+                <a href="#features" class="btn btn-secondary">En Savoir Plus</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>✨ Nos Fonctionnalités</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Audio Haute Qualité</h3>
+                    <p>Récitations claires et nettes de toutes les sourates du Coran</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Recherche Rapide</h3>
+                    <p>Trouvez rapidement la sourate que vous recherchez</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📥</div>
+                    <h3>Téléchargement</h3>
+                    <p>Téléchargez les sourates pour écouter hors ligne</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>Accédez au site sur tous vos appareils</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🇸🇦</div>
+                    <h3>Texte Arabe</h3>
+                    <p>Affichage du texte arabe original avec translittération</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Rapide et Fluide</h3>
+                    <p>Interface optimisée pour une navigation fluide</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon" id="venir">
+        <div class="container">
+            <h2>🚀 Fonctionnalités À Venir</h2>
+            <p>Nous préparez des nouvelles fonctionnalités pour enrichir votre expérience</p>
+            <div class="coming-features">
+                <div class="coming-feature">
+                    <h4>📚 Tafsir</h4>
+                    <p>Explications détaillées des sourates</p>
+                </div>
+                <div class="coming-feature">
+                    <h4>🎯 Favoris</h4>
+                    <p>Sauvegardez vos sourates préférées</p>
+                </div>
+                <div class="coming-feature">
+                    <h4>🌙 Mode Sombre</h4>
+                    <p>Thème sombre pour plus de confort</p>
+                </div>
+                <div class="coming-feature">
+                    <h4>🔔 Notifications</h4>
+                    <p>Rappels pour les prières quotidiennes</p>
+                </div>
+                <div class="coming-feature">
+                    <h4>🎭 Récitateurs</h4>
+                    <p>Plusieurs récitations par sourate</p>
+                </div>
+                <div class="coming-feature">
+                    <h4>📊 Statistiques</h4>
+                    <p>Suivi de votre progression de lecture</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 - Récitations du Coran. Tous les droits réservés.</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Créé avec ❤️ pour la communauté</p>
+        </div>
+    </footer>
+</body>
+</html>
