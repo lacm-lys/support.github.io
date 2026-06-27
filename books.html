@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressources PDF - Récitations du Coran</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        /* Navigation */
+        nav {
+            background: rgba(5, 150, 105, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Section */
+        .header {
+            color: white;
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        /* Books Section */
+        .books-section {
+            padding: 60px 20px;
+        }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .book-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #10b981;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+        
+        .book-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+        
+        .book-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+        
+        .book-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .book-subtitle {
+            opacity: 0.9;
+            font-size: 1em;
+        }
+        
+        .book-body {
+            padding: 25px;
+        }
+        
+        .book-info {
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #059669;
+        }
+        
+        .info-value {
+            color: #666;
+        }
+        
+        .book-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            border-radius: 4px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        /* Categories Section */
+        .categories {
+            background: white;
+            padding: 60px 20px;
+            margin: 40px 0;
+            border-radius: 12px;
+        }
+        
+        .categories h2 {
+            text-align: center;
+            color: #059669;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 25px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .category-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .category-name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(5, 150, 105, 0.95);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            nav ul {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="home.html" class="logo">📖 Coran Récitations</a>
+            <ul>
+                <li><a href="home.html">Accueil</a></li>
+                <li><a href="sourates.html">Sourates</a></li>
+                <li><a href="books.html">📚 Ressources PDF</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>📚 Ressources et Livres PDF</h1>
+        <p>Découvrez notre collection complète de ressources islamiques</p>
+    </div>
+
+    <!-- Categories -->
+    <section class="categories container">
+        <h2>📖 Catégories</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-icon">📕</div>
+                <div class="category-name">Coran</div>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📗</div>
+                <div class="category-name">Tafsir</div>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📘</div>
+                <div class="category-name">Hadiths</div>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📙</div>
+                <div class="category-name">Aqidah</div>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📓</div>
+                <div class="category-name">Fiqh</div>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">📔</div>
+                <div class="category-name">Biographies</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="books-section">
+        <div class="container">
+            <div class="books-grid">
+                <!-- Book 1 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📖</div>
+                        <div class="book-title">Coran Complet</div>
+                        <div class="book-subtitle">Édition en arabe avec translittération</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">604</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">15 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Le Coran complet avec texte arabe et translittération phonétique pour faciliter la lecture.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📕</div>
+                        <div class="book-title">Tafsir Al-Baydawi</div>
+                        <div class="book-subtitle">Exégèse du Coran</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">820</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">25 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Exégèse complète et détaillée du Coran par Nasafi Al-Baydawi. Idéale pour la compréhension approfondie.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📗</div>
+                        <div class="book-title">Sahih Al-Bukhari</div>
+                        <div class="book-subtitle">Recueil des Hadiths authentiques</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">950</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">30 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Collection complète des hadiths authentiques de Sahih Al-Bukhari, le plus prestigieux recueil hadithique.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📘</div>
+                        <div class="book-title">Sahih Muslim</div>
+                        <div class="book-subtitle">Le second authentique</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">880</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">28 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Compilation des hadiths authentiques de Sahih Muslim, deuxième recueil le plus respecté en Islam.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 5 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📙</div>
+                        <div class="book-title">Aqidah Tahawiyyah</div>
+                        <div class="book-subtitle">Croyance islamique expliquée</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">120</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">5 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Traité fondamental sur la croyance islamique avec commentaires détaillés et explications claires.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 6 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📓</div>
+                        <div class="book-title">Jardins de la Piété</div>
+                        <div class="book-subtitle">Recueil de Versets et Hadiths</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">450</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">12 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Compilation inspirante de versets coraniques et hadiths pour la méditation et la réflexion quotidienne.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 7 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📔</div>
+                        <div class="book-title">Les Prophètes en Islam</div>
+                        <div class="book-subtitle">Histoires et enseignements</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">380</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">10 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Récits détaillés des prophètes et messagers de l'Islam avec les leçons que nous pouvons en tirer.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 8 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📕</div>
+                        <div class="book-title">Fiqh Al-Ibadah</div>
+                        <div class="book-subtitle">Les Actes d'adoration</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">320</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">8 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Guide complet sur le Fiqh des actes d'adoration avec les règles et les conditions juridiques.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+
+                <!-- Book 9 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">📗</div>
+                        <div class="book-title">La Biographie du Prophète</div>
+                        <div class="book-subtitle">Vie du Prophète Muhammad</div>
+                    </div>
+                    <div class="book-body">
+                        <div class="book-info">
+                            <div class="info-row">
+                                <span class="info-label">Format :</span>
+                                <span class="info-value">PDF</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pages :</span>
+                                <span class="info-value">500</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Taille :</span>
+                                <span class="info-value">14 MB</span>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            Histoire complète et détaillée de la vie du Prophète Muhammad (PBSL) et ses accomplissements.
+                        </div>
+                        <button class="download-btn">📥 Télécharger</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 - Récitations du Coran. Tous les droits réservés.</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Créé avec ❤️ pour la communauté</p>
+        </div>
+    </footer>
+</body>
+</html>
