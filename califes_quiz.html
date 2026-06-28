@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz – Les Califes bien guidés</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #D4AF37;
+    --gold-light: #F4D03F;
+    --bg: #B8D4E8;
+    --white: #FFFFFF;
+    --cream: #F8F4E8;
+    --dark: #1A1A2E;
+    --red: #C0392B;
+    --green: #27AE60;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+    background: var(--dark);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* ── SLIDES CONTAINER ── */
+  #app {
+    width: 100vw; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── TITLE SLIDE ── */
+  #slide-title {
+    background: radial-gradient(ellipse at 30% 40%, #1A3A5C 0%, #0D1B2A 70%);
+  }
+  .title-card {
+    text-align: center;
+    padding: 3rem 4rem;
+    border: 2px solid var(--gold);
+    border-radius: 1.5rem;
+    max-width: 700px;
+    position: relative;
+  }
+  .title-card::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 1.2rem;
+    pointer-events: none;
+  }
+  .quiz-label {
+    font-size: clamp(4rem, 10vw, 7rem);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(244,208,63,0.4);
+  }
+  .serie-label {
+    font-size: 1.1rem;
+    color: #7BA7C8;
+    margin-top: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .title-main {
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    font-weight: 800;
+    color: var(--white);
+    margin-top: 0.8rem;
+    line-height: 1.3;
+  }
+  .title-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2rem;
+    letter-spacing: 0.15em;
+  }
+  .start-hint {
+    margin-top: 2.5rem;
+    font-size: 1rem;
+    color: var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 0.5; } 50% { opacity: 1; }
+  }
+
+  /* ── QUESTION SLIDE ── */
+  .slide-question {
+    background: var(--bg);
+  }
+
+  .q-inner {
+    width: 92%;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 92vh;
+  }
+
+  /* top bar: num + timer */
+  .q-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+  }
+  .q-num {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: 0.05em;
+  }
+  .timer-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .timer-digits {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--red);
+    min-width: 2.5rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s;
+  }
+  .timer-digits.warn { color: #E67E22; }
+  .timer-digits.ok   { color: var(--green); }
+
+  /* timer bar */
+  .timer-bar-bg {
+    height: 8px;
+    background: rgba(0,0,0,0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    flex: 1;
+    min-width: 120px;
+  }
+  .timer-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    width: 100%;
+    transition: width 1s linear, background 1s;
+  }
+
+  /* card */
+  .q-card {
+    flex: 1;
+    border-radius: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  }
+
+  .q-badge {
+    position: absolute;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold-light);
+    color: #1A1A2E;
+    font-weight: 800;
+    font-size: 0.95rem;
+    padding: 0.3rem 1.4rem;
+    border-radius: 2rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .q-text {
+    font-size: clamp(1.3rem, 3.2vw, 2rem);
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 820px;
+  }
+
+  .click-hint {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── ANSWER SLIDE ── */
+  .slide-answer {
+    background: var(--bg);
+  }
+
+  .a-inner {
+    width: 92%;
+    max-width: 960px;
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .a-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+  }
+  .a-series {
+    font-size: 0.8rem;
+    color: #888;
+    letter-spacing: 0.05em;
+  }
+  .a-num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #888;
+  }
+
+  .a-card {
+    flex: 1;
+    background: var(--cream);
+    border-radius: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 2.5rem;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  }
+
+  .a-reponse {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+  .a-divider {
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0.4rem 0 1.4rem;
+  }
+  .a-text {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: #1A1A2E;
+    text-align: center;
+    line-height: 1.6;
+    max-width: 780px;
+  }
+
+  .a-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+  }
+  .a-apbif {
+    font-size: 0.75rem;
+    color: #aaa;
+    letter-spacing: 0.1em;
+  }
+  .next-hint {
+    font-size: 0.82rem;
+    color: #888;
+    font-style: italic;
+  }
+
+  .a-badge {
+    position: absolute;
+    bottom: 1.2rem;
+    right: 1.5rem;
+    width: 2.2rem; height: 2.2rem;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.9rem;
+    color: white;
+  }
+
+  /* ── END SLIDE ── */
+  #slide-end {
+    background: radial-gradient(ellipse at 60% 40%, #1A3A5C 0%, #0D1B2A 70%);
+    text-align: center;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .end-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--gold-light);
+  }
+  .end-sub {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .restart-btn {
+    margin-top: 1rem;
+    padding: 0.8rem 2.5rem;
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+  }
+
+  /* ── PROGRESS DOT BAR ── */
+  .progress-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(0,0,0,0.15);
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  /* Responsive font clamp already handled above */
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- slides injected by JS -->
+</div>
+<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+
+<script>
+const QA = [
+  { q: "Comment s'appelait le premier calife bien guidé ?", r: "Le premier calife bien guidé était notre maître\nAbou Bakr as-Siddiq ﭬ", color: "#6B2D5E" },
+  { q: "Quelle est la durée du califat de notre maître Abou Bakr as-Siddiq ﭬ ?", r: "Le califat de notre maître Abou Bakr as-Siddiq ﭬ\na duré deux ans et trois mois.", color: "#8B6914" },
+  { q: "Quel est le prénom de naissance de notre maître Abou Bakr as-Siddiq ﭬ\net quel est le prénom de son père ?", r: "Son nom est 'Abdou l-Lah fils de 'Outhman.", color: "#1A6B8A" },
+  { q: "En quelle année notre maître Abou Bakr as-Siddiq ﭬ\na-t-il été désigné calife ?", r: "Il a été désigné calife en l'an onze de l'Hégire.", color: "#8B2020" },
+  { q: "Qui a dirigé la prière funéraire en faveur de notre maître Abou Bakr as-Siddiq ﭬ ?", r: "C'est notre maître 'Oumar ibn Al-Khattab ﭬ\nqui a dirigé la prière funéraire en sa faveur.", color: "#2D6B3F" },
+  { q: "Comment s'appelait le deuxième calife bien guidé ?", r: "Le deuxième calife bien guidé était notre maître\n'Oumar ibn Al-Khattab ﭬ", color: "#5A2D8A" },
+  { q: "En quelle année est né notre maître 'Oumar ibn Al-Khattab ﭬ ?", r: "Notre maître 'Oumar ibn Al-Khattab ﭬ est né\ntreize ans après l'année de l'éléphant.", color: "#1A7A6B" },
+  { q: "Quel est le titre que s'était donné\nnotre maître 'Oumar ibn Al-Khattab ﭬ ?", r: "Il s'est donné le titre de\n« Amir al-Mu'minin » — l'Émir des Croyants.", color: "#7A2D00" },
+  { q: "Quelle est la durée du califat\nde notre maître 'Oumar ibn Al-Khattab ﭬ ?", r: "Le califat de notre maître 'Oumar ibn Al-Khattab ﭬ\na duré dix ans et six mois.", color: "#3A4A6B" },
+  { q: "Où sont enterrés les deux premiers califes bien guidés ?", r: "Ils sont enterrés derrière le Prophète ﷺ dans la chambre\nde la Dame 'A'ichah que Dieu l'agrée.", color: "#6B3A00" },
+  { q: "Comment s'appelait le troisième calife bien guidé ?", r: "Le troisième calife bien guidé était notre maître\n'Outhman ibn 'Affan ﭬ", color: "#2D5A8A" },
+  { q: "Quelles sont les deux émigrations\nque notre maître 'Outhman ibn 'Affan ﭬ a accomplies ?", r: "Il a émigré de La Mecque vers l'Abyssinie,\npuis de La Mecque vers Médine.", color: "#6B5A00" },
+  { q: "Quel était le surnom de notre maître 'Outhman ibn 'Affan ﭬ ?", r: "Son surnom était Dhou n-Nourayn (l'Homme aux deux lumières)\ncar il avait épousé deux filles du Prophète ﷺ.", color: "#8A2D6B" },
+  { q: "Quelle était la durée du califat\nde notre maître 'Outhman ibn 'Affan ﭬ ?", r: "Le califat de notre maître 'Outhman ibn 'Affan ﭬ\na duré douze ans.", color: "#2D6B5A" },
+  { q: "Comment s'appelait le quatrième calife bien guidé ?", r: "Le quatrième calife bien guidé était notre maître\n'Aliyy ibn Abi Talib ﭬ", color: "#7A4A00" },
+  { q: "Qui a surnommé notre maître 'Aliyy ibn Abi Talib ﭬ\n« Abou Tourab » ?", r: "Le Prophète Mouhammad ﷺ avait surnommé\nnotre maître 'Aliyy ibn Abi Talib ﭬ « Abou Tourab ».", color: "#4A2D8A" },
+  { q: "Quelle était la durée du califat\nde notre maître 'Aliyy ibn Abi Talib ﭬ ?", r: "Le califat de notre maître 'Aliyy ibn Abi Talib ﭬ\na duré quatre ans et neuf mois.", color: "#1A5A2D" },
+  { q: "Quelle était la durée du califat\nde notre maître Al-Haçan fils de 'Aliyy ﭬ ?", r: "Le califat de notre maître Al-Haçan fils de 'Aliyy ﭬ\na duré six mois.", color: "#8A1A4A" },
+  { q: "Quelle est la durée totale du califat des califes bien guidés ?", r: "La durée totale est de trente ans, comme l'a dit le Prophète ﷺ :\n« Le califat après moi est de trente ans. »", color: "#1A2D8A" },
+  { q: "Quel calife bien guidé a rassemblé les gens pour la prière\nde at-Tarawih derrière un même imam ?", r: "C'est notre maître 'Oumar ibn Al-Khattab ﭬ\nqui les a rassemblés pour la prière de at-Tarawih.", color: "#3A6B2D" },
+  { q: "Quel calife bien guidé a été le premier homme\nde la communauté du Prophète ﷺ à entrer en Islam ?", r: "Notre maître Abou Bakr as-Siddiq ﭬ\na été le premier homme à entrer en Islam.", color: "#6B1A2D" },
+  { q: "Quel calife bien guidé a été\nle premier enfant à entrer en Islam ?", r: "Notre maître 'Aliyy ibn Abi Talib ﭬ\na été le premier enfant à entrer en Islam.", color: "#1A6B4A" },
+  { q: "Quel calife bien guidé a accompli l'émigration à Médine\nen compagnie du Prophète ﷺ ?", r: "Notre maître Abou Bakr as-Siddiq ﭬ a accompli\nl'émigration à Médine en compagnie du Prophète ﷺ.", color: "#5A1A8A" },
+  { q: "Quel calife bien guidé avait acheté le puits de Roumah\net l'avait mis à disposition des musulmans ?", r: "Notre maître 'Outhman ibn 'Affan ﭬ avait acheté\nle puits de Roumah et l'avait mis à disposition des musulmans.", color: "#8A5A00" },
+];
+
+const TOTAL = QA.length;
+const TIMER_SEC = 10;
+
+const app = document.getElementById('app');
+const prog = document.getElementById('prog');
+
+let currentSlide = 0; // 0=title, 1..2n=Q/A pairs, 2n+1=end
+let timerInterval = null;
+let timerLeft = TIMER_SEC;
+let waitingForClick = false; // true when on a question slide
+
+// ── Build all slides ─────────────────────────────────────────────────
+
+function nl2br(str) {
+  return str.replace(/\n/g, '<br>');
+}
+
+// Title slide
+const titleEl = document.createElement('div');
+titleEl.className = 'slide active';
+titleEl.id = 'slide-title';
+titleEl.innerHTML = `
+  <div class="title-card">
+    <div class="quiz-label">QUIZ</div>
+    <div class="serie-label">Série</div>
+    <div class="title-main">Les Califes bien guidés</div>
+    <div class="title-sub">Cartes éducatives APBIF</div>
+    <div class="start-hint">▶ Cliquez pour commencer</div>
+  </div>`;
+app.appendChild(titleEl);
+
+// Q&A slides
+QA.forEach((item, i) => {
+  const n = i + 1;
+
+  // Question
+  const qEl = document.createElement('div');
+  qEl.className = 'slide slide-question';
+  qEl.id = `slide-q-${n}`;
+  qEl.innerHTML = `
+    <div class="q-inner">
+      <div class="q-topbar">
+        <span class="q-num">Question ${n} / ${TOTAL}</span>
+        <div class="timer-wrap">
+          <div class="timer-bar-bg"><div class="timer-bar-fill" id="bar-${n}"></div></div>
+          <div class="timer-digits ok" id="digits-${n}">${TIMER_SEC}</div>
+        </div>
+      </div>
+      <div class="q-card" style="background:${item.color}">
+        <div class="q-badge">Question ${n} / ${TOTAL}</div>
+        <div class="q-text">${nl2br(item.q)}</div>
+      </div>
+      <div class="click-hint">Cliquez pour révéler la réponse</div>
+    </div>`;
+  app.appendChild(qEl);
+
+  // Answer
+  const aColor = item.color;
+  const aEl = document.createElement('div');
+  aEl.className = 'slide slide-answer';
+  aEl.id = `slide-a-${n}`;
+  aEl.innerHTML = `
+    <div class="a-inner">
+      <div class="a-topbar">
+        <span class="a-series">Série : Les califes bien guidés</span>
+        <span class="a-num">${n} / ${TOTAL}</span>
+      </div>
+      <div class="a-card">
+        <div class="a-reponse" style="color:${aColor}">Réponse</div>
+        <div class="a-divider"></div>
+        <div class="a-text">${nl2br(item.r)}</div>
+        <div class="a-badge">${n}</div>
+      </div>
+      <div class="a-footer">
+        <span class="a-apbif">Cartes éducatives APBIF</span>
+        <span class="next-hint">${n < TOTAL ? '▶ Cliquez pour la question suivante' : '▶ Cliquez pour terminer'}</span>
+      </div>
+    </div>`;
+  app.appendChild(aEl);
+});
+
+// End slide
+const endEl = document.createElement('div');
+endEl.className = 'slide';
+endEl.id = 'slide-end';
+endEl.innerHTML = `
+  <div class="end-title">🌙 Bravo !</div>
+  <div class="end-sub">Vous avez terminé les ${TOTAL} questions sur les Califes bien guidés.</div>
+  <button class="restart-btn" onclick="restart()">↺ Recommencer</button>`;
+app.appendChild(endEl);
+
+// ── Slide index helpers ───────────────────────────────────────────────
+// 0 = title
+// 1 = Q1, 2 = A1, 3 = Q2, 4 = A2, ...
+// 2*TOTAL+1 = end
+
+function slideCount() { return 1 + TOTAL * 2 + 1; }
+
+function getSlideEl(idx) {
+  if (idx === 0) return document.getElementById('slide-title');
+  if (idx === slideCount() - 1) return document.getElementById('slide-end');
+  const pair = Math.ceil(idx / 2);
+  const isQ = idx % 2 === 1;
+  return document.getElementById(isQ ? `slide-q-${pair}` : `slide-a-${pair}`);
+}
+
+function isQuestion(idx) { return idx > 0 && idx < slideCount() - 1 && idx % 2 === 1; }
+function isAnswer(idx)   { return idx > 0 && idx < slideCount() - 1 && idx % 2 === 0; }
+
+// ── Timer ────────────────────────────────────────────────────────────
+
+function stopTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+}
+
+function startTimer(qNum) {
+  stopTimer();
+  timerLeft = TIMER_SEC;
+  updateTimer(qNum, timerLeft);
+  timerInterval = setInterval(() => {
+    timerLeft--;
+    updateTimer(qNum, timerLeft);
+    if (timerLeft <= 0) {
+      stopTimer();
+      // auto-advance to answer on timeout
+      goNext();
+    }
+  }, 1000);
+}
+
+function updateTimer(qNum, sec) {
+  const bar = document.getElementById(`bar-${qNum}`);
+  const digits = document.getElementById(`digits-${qNum}`);
+  if (!bar || !digits) return;
+  const pct = (sec / TIMER_SEC) * 100;
+  bar.style.width = pct + '%';
+  digits.textContent = Math.max(0, sec);
+  // Color
+  if (sec > 6)      { bar.style.background = '#27AE60'; digits.className = 'timer-digits ok'; }
+  else if (sec > 3) { bar.style.background = '#E67E22'; digits.className = 'timer-digits warn'; }
+  else              { bar.style.background = '#C0392B'; digits.className = 'timer-digits'; }
+}
+
+// ── Navigation ───────────────────────────────────────────────────────
+
+function showSlide(idx) {
+  // Hide all
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  // Show target
+  const el = getSlideEl(idx);
+  if (el) el.classList.add('active');
+  currentSlide = idx;
+
+  // Progress
+  const total = slideCount() - 1;
+  prog.style.width = (idx / total * 100) + '%';
+
+  // Timer logic
+  stopTimer();
+  if (isQuestion(idx)) {
+    const qNum = Math.ceil(idx / 2);
+    startTimer(qNum);
+  }
+}
+
+function goNext() {
+  const next = currentSlide + 1;
+  if (next < slideCount()) showSlide(next);
+}
+
+function restart() {
+  showSlide(0);
+}
+
+// ── Click handler ────────────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('restart-btn')) return;
+  goNext();
+});
+
+// Keyboard support
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'Enter') {
+    e.preventDefault();
+    goNext();
+  }
+  if (e.key === 'ArrowLeft' && currentSlide > 0) {
+    stopTimer();
+    showSlide(currentSlide - 1);
+  }
+});
+</script>
+</body>
+</html>
